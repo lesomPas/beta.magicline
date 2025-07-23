@@ -1,0 +1,30 @@
+[gd_scene load_steps=5 format=3 uid="uid://c3k813wvl1a03"]
+
+[ext_resource type="Script" uid="uid://bm5yl1dilux0j" path="res://classes/start.gd" id="1_f5myi"]
+[ext_resource type="PackedScene" uid="uid://b4kh87dkteog3" path="res://screens/joystick.tscn" id="2_oncuk"]
+[ext_resource type="PackedScene" uid="uid://b84mqy5i11e66" path="res://screens/player.tscn" id="3_y4iue"]
+
+[sub_resource type="SegmentShape2D" id="SegmentShape2D_y4iue"]
+a = Vector2(1375, 646)
+b = Vector2(-176, 649)
+
+[node name="start" type="Node2D"]
+script = ExtResource("1_f5myi")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="joystick" parent="CanvasLayer" instance=ExtResource("2_oncuk")]
+unique_name_in_owner = true
+position = Vector2(190, 495)
+scale = Vector2(0.659, 0.659)
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+shape = SubResource("SegmentShape2D_y4iue")
+
+[node name="entity" parent="." instance=ExtResource("3_y4iue")]
+position = Vector2(40, 8)
+scale = Vector2(3, 3)
+run_velocity = 480.0
+jump_velocity = -960.0

@@ -1,0 +1,49 @@
+[gd_scene load_steps=12 format=3 uid="uid://bsx51wa6wxigb"]
+
+[ext_resource type="PackedScene" uid="uid://cm1x6et8onboo" path="res://screens/entity.tscn" id="1_6f4wm"]
+[ext_resource type="Script" uid="uid://c4a3r373v1txd" path="res://classes/attribute/attribute_component.gd" id="2_t47yc"]
+[ext_resource type="Script" uid="uid://cmxe3mvqgwmch" path="res://classes/entity/human.gd" id="2_yaqt7"]
+[ext_resource type="Script" uid="uid://bmnuv5bs6auqp" path="res://classes/attribute/attribute.gd" id="3_yaqt7"]
+[ext_resource type="Script" uid="uid://d12lu86r7qbg" path="res://classes/attribute/attributes/health.gd" id="4_xp8fr"]
+[ext_resource type="Script" uid="uid://cr62nmy4ogdew" path="res://classes/attribute/attributes/stamina.gd" id="5_cynq8"]
+[ext_resource type="Script" uid="uid://yeiwlf2g3ea7" path="res://classes/attribute/attribute_collection.gd" id="6_ax1nd"]
+
+[sub_resource type="Resource" id="Resource_4oo1q"]
+script = ExtResource("4_xp8fr")
+attribute_name = "health"
+base_value = 100.0
+lower_limit = 0.0
+upper_limit = 100.0
+metadata/_custom_type_script = "uid://d12lu86r7qbg"
+
+[sub_resource type="Resource" id="Resource_wowuo"]
+script = ExtResource("3_yaqt7")
+attribute_name = "magic"
+base_value = 120.0
+lower_limit = 0.0
+upper_limit = 120.0
+metadata/_custom_type_script = "uid://bmnuv5bs6auqp"
+
+[sub_resource type="Resource" id="Resource_y001b"]
+script = ExtResource("5_cynq8")
+attribute_name = "stamina"
+base_value = 100.0
+lower_limit = 0.0
+upper_limit = 100.0
+metadata/_custom_type_script = "uid://cr62nmy4ogdew"
+
+[sub_resource type="Resource" id="Resource_kpk67"]
+script = ExtResource("6_ax1nd")
+attributes = Array[ExtResource("3_yaqt7")]([SubResource("Resource_4oo1q"), SubResource("Resource_wowuo"), SubResource("Resource_y001b")])
+metadata/_custom_type_script = "uid://yeiwlf2g3ea7"
+
+[node name="entity" instance=ExtResource("1_6f4wm")]
+script = ExtResource("2_yaqt7")
+
+[node name="graphics" parent="." index="0"]
+unique_name_in_owner = true
+
+[node name="AttributeComponent" type="Node" parent="." index="3"]
+script = ExtResource("2_t47yc")
+attribute_collection = SubResource("Resource_kpk67")
+metadata/_custom_type_script = "uid://c4a3r373v1txd"

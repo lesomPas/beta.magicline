@@ -1,0 +1,26 @@
+[gd_scene load_steps=4 format=3 uid="uid://bkxtmrxheopbh"]
+
+[ext_resource type="PackedScene" uid="uid://bsx51wa6wxigb" path="res://screens/human.tscn" id="1_e81ej"]
+[ext_resource type="Script" uid="uid://d1rds4fddc7iq" path="res://classes/entity/interactive_npc.gd" id="2_7206x"]
+[ext_resource type="Script" uid="uid://bp12x5c03r4m5" path="res://classes/entity/interface/automatic.gd" id="3_6cdc5"]
+
+[node name="entity" instance=ExtResource("1_e81ej")]
+collision_layer = 4
+script = ExtResource("2_7206x")
+
+[node name="Hitbox" parent="graphics" index="1"]
+collision_mask = 8
+
+[node name="Hurtbox" parent="graphics" index="2"]
+collision_layer = 16
+
+[node name="WallChecker" type="RayCast2D" parent="graphics" index="3"]
+
+[node name="FloorChecker" type="RayCast2D" parent="graphics" index="4"]
+
+[node name="PlayerChecker" type="Area2D" parent="graphics" index="5"]
+
+[node name="MotionInterface" parent="." index="2"]
+script = ExtResource("3_6cdc5")
+
+[node name="TurnBackTimer" type="Timer" parent="MotionInterface" index="2"]

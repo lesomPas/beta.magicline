@@ -1,0 +1,56 @@
+[gd_scene load_steps=9 format=3 uid="uid://cm1x6et8onboo"]
+
+[ext_resource type="Script" uid="uid://n8fehuc607g4" path="res://classes/entity/entity.gd" id="1_hts5j"]
+[ext_resource type="Script" uid="uid://hlk3545pf0av" path="res://classes/entity/hitbox.gd" id="2_45sem"]
+[ext_resource type="Script" uid="uid://0l52vf8urt4x" path="res://classes/entity/hurtbox.gd" id="2_gh77o"]
+[ext_resource type="Shader" uid="uid://clgu1gwxyx32c" path="res://shader/hit_die.gdshader" id="2_l1ax1"]
+[ext_resource type="Script" uid="uid://cx30tncyvabba" path="res://classes/utils/state_machine.gd" id="2_qj1k1"]
+[ext_resource type="Script" uid="uid://ch5ma2b8sagaq" path="res://classes/entity/func_animation.gd" id="3_cdciy"]
+[ext_resource type="Script" uid="uid://bwnwy26rellye" path="res://classes/entity/interface/motion_interface.gd" id="4_45sem"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_8l8bd"]
+shader = ExtResource("2_l1ax1")
+shader_parameter/opacity_percent = 1.0
+shader_parameter/white_percent = 0.0
+
+[node name="entity" type="CharacterBody2D"]
+collision_layer = 0
+script = ExtResource("1_hts5j")
+
+[node name="graphics" type="Node2D" parent="."]
+
+[node name="Sprite2D" type="Sprite2D" parent="graphics"]
+material = SubResource("ShaderMaterial_8l8bd")
+script = ExtResource("3_cdciy")
+
+[node name="Hitbox" type="Area2D" parent="graphics"]
+collision_layer = 0
+collision_mask = 0
+script = ExtResource("2_45sem")
+metadata/_custom_type_script = "uid://hlk3545pf0av"
+
+[node name="Hurtbox" type="Area2D" parent="graphics"]
+collision_layer = 0
+collision_mask = 0
+script = ExtResource("2_gh77o")
+metadata/_custom_type_script = "uid://0l52vf8urt4x"
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+
+[node name="MotionInterface" type="Node" parent="."]
+script = ExtResource("4_45sem")
+metadata/_custom_type_script = "uid://bwnwy26rellye"
+
+[node name="JumpRequestTimer" type="Timer" parent="MotionInterface"]
+wait_time = 0.1
+one_shot = true
+
+[node name="CoyoteTimer" type="Timer" parent="MotionInterface"]
+wait_time = 0.1
+one_shot = true
+
+[node name="PhysicsStateMachine" type="Node" parent="."]
+script = ExtResource("2_qj1k1")
+metadata/_custom_type_script = "uid://cx30tncyvabba"
+
+[connection signal="hurt" from="graphics/Hurtbox" to="." method="_on_hurtbox_hurt"]
