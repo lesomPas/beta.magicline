@@ -18,6 +18,9 @@ var player: Human
 func _ready() -> void:
 	ground_states.append(NPCState.follow)
 
+func direction_to() -> Vector2:
+	return player.global_position - self.global_position
+
 func _tick_physics(state: int, delta: float) -> void:
 	if state < 6:
 		self.internal_tick_physics(state, delta)
@@ -32,7 +35,7 @@ func _tick_physics(state: int, delta: float) -> void:
 
 
 func _transition_state(from: int, to: int) -> void:
-	if to < 6:
+	if 2 < to and to < 6:
 		self.internal_transition_state(from, to)
 		return
 
@@ -40,10 +43,27 @@ func _transition_state(from: int, to: int) -> void:
 		interface.coyote_timer.stop()
 
 	match to:
+		PhysicsState.idle:
+			animation_player.play("idle")
+			if wall_checker.is_colliding():
+				direction = -1
+
+			interface.turn_back_timer.stop()
+
+		PhysicsState.walk:
+			animation_player.play("run")
+			if not floor_checker.is_colliding():
+				direction = -1
+				floor_checker.force_raycast_update()
+
+			interface.turn_back_timer.start()
+
 		NPCState.follow:
 			player = player_checker.get_overlapping_bodies()[0]
-			animation_player.play("walk")
-
+			if direction_to().length() >= 50.0:
+				animation_player.play("walk")
+			else:
+				animation_player.play("idle")
 
 func internal_get_next_state(state: int) -> int:
 	if pending_damage:
@@ -63,13 +83,15 @@ func internal_get_next_state(state: int) -> int:
 		PhysicsState.idle:
 			if interface.should_attack:
 				return PhysicsState.attack
-			if not is_still:
+			if not is_still or physics_state_machine.state_time > 7.5:
 				return PhysicsState.walk
 
 		PhysicsState.walk:
 			if interface.should_attack:
 				return PhysicsState.attack
-			if is_still:
+			if wall_checker.is_colliding() or not floor_checker.is_colliding():
+				return PhysicsState.idle
+			if is_still or physics_state_machine.state_time > 7.5:
 				return PhysicsState.idle
 
 		PhysicsState.jump:
