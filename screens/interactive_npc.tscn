@@ -19,6 +19,8 @@ collision_layer = 16
 [node name="FloorChecker" type="RayCast2D" parent="graphics" index="4"]
 
 [node name="PlayerChecker" type="Area2D" parent="graphics" index="5"]
+collision_layer = 0
+collision_mask = 2
 
 [node name="MotionInterface" parent="." index="2"]
 script = ExtResource("3_6cdc5")

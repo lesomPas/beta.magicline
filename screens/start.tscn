@@ -1,12 +1,17 @@
-[gd_scene load_steps=5 format=3 uid="uid://c3k813wvl1a03"]
+[gd_scene load_steps=9 format=3 uid="uid://c3k813wvl1a03"]
 
 [ext_resource type="Script" uid="uid://bm5yl1dilux0j" path="res://classes/start.gd" id="1_f5myi"]
 [ext_resource type="PackedScene" uid="uid://b4kh87dkteog3" path="res://screens/joystick.tscn" id="2_oncuk"]
+[ext_resource type="PackedScene" uid="uid://c14muw5rkx14y" path="res://screens/status_panel.tscn" id="3_oapv3"]
 [ext_resource type="PackedScene" uid="uid://b84mqy5i11e66" path="res://screens/player.tscn" id="3_y4iue"]
+[ext_resource type="PackedScene" uid="uid://quwqbm1iqsa" path="res://screens/witch.tscn" id="4_tnilg"]
+[ext_resource type="Script" uid="uid://cp4onutc6s0is" path="res://classes/timeManager.gd" id="6_3s0d0"]
 
-[sub_resource type="SegmentShape2D" id="SegmentShape2D_y4iue"]
-a = Vector2(1375, 646)
-b = Vector2(-176, 649)
+[sub_resource type="CircleShape2D" id="CircleShape2D_tnilg"]
+radius = 100.0
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_tnilg"]
+distance = -648.0
 
 [node name="start" type="Node2D"]
 script = ExtResource("1_f5myi")
@@ -18,13 +23,102 @@ unique_name_in_owner = true
 position = Vector2(190, 495)
 scale = Vector2(0.659, 0.659)
 
+[node name="JumpButton" type="TouchScreenButton" parent="CanvasLayer"]
+position = Vector2(1003, 493)
+shape = SubResource("CircleShape2D_tnilg")
+action = "jump"
+
+[node name="Control" type="Control" parent="CanvasLayer"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+metadata/_edit_lock_ = true
+
+[node name="VFlowContainer" type="VFlowContainer" parent="CanvasLayer/Control"]
+layout_mode = 0
+offset_top = 76.0
+offset_right = 318.0
+offset_bottom = 250.0
+
+[node name="AspectRatioContainer" type="AspectRatioContainer" parent="CanvasLayer/Control/VFlowContainer"]
+layout_mode = 2
+alignment_horizontal = 0
+alignment_vertical = 0
+
+[node name="PanelContainer" type="PanelContainer" parent="CanvasLayer/Control/VFlowContainer/AspectRatioContainer"]
+layout_mode = 2
+
+[node name="PositionLab" type="Label" parent="CanvasLayer/Control/VFlowContainer/AspectRatioContainer/PanelContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = " position::(0, 0) "
+
+[node name="AspectRatioContainer2" type="AspectRatioContainer" parent="CanvasLayer/Control/VFlowContainer"]
+layout_mode = 2
+alignment_horizontal = 0
+alignment_vertical = 0
+
+[node name="PanelContainer" type="PanelContainer" parent="CanvasLayer/Control/VFlowContainer/AspectRatioContainer2"]
+layout_mode = 2
+
+[node name="StateLab" type="Label" parent="CanvasLayer/Control/VFlowContainer/AspectRatioContainer2/PanelContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = " state: <normal>"
+
+[node name="AspectRatioContainer3" type="AspectRatioContainer" parent="CanvasLayer/Control/VFlowContainer"]
+layout_mode = 2
+alignment_horizontal = 0
+alignment_vertical = 0
+
+[node name="PanelContainer" type="PanelContainer" parent="CanvasLayer/Control/VFlowContainer/AspectRatioContainer3"]
+layout_mode = 2
+
+[node name="TimeLab" type="Label" parent="CanvasLayer/Control/VFlowContainer/AspectRatioContainer3/PanelContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = " time: 2022-7-12 15:40:03 "
+
+[node name="StatusPanel" parent="CanvasLayer/Control" instance=ExtResource("3_oapv3")]
+visible = false
+layout_mode = 0
+offset_left = 22.0
+offset_top = 22.0
+offset_right = 80.0
+offset_bottom = 48.0
+
 [node name="StaticBody2D" type="StaticBody2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
-shape = SubResource("SegmentShape2D_y4iue")
+shape = SubResource("WorldBoundaryShape2D_tnilg")
 
-[node name="entity" parent="." instance=ExtResource("3_y4iue")]
-position = Vector2(40, 8)
+[node name="player" parent="." instance=ExtResource("3_y4iue")]
+unique_name_in_owner = true
+position = Vector2(455, 326)
 scale = Vector2(3, 3)
 run_velocity = 480.0
 jump_velocity = -960.0
+
+[node name="Camera2D" type="Camera2D" parent="player"]
+limit_bottom = 648
+limit_smoothed = true
+position_smoothing_enabled = true
+drag_horizontal_enabled = true
+drag_vertical_enabled = true
+
+[node name="witch" parent="." instance=ExtResource("4_tnilg")]
+position = Vector2(710, 331)
+scale = Vector2(3, 3)
+
+[node name="TimeManager" type="Node" parent="."]
+unique_name_in_owner = true
+script = ExtResource("6_3s0d0")
+metadata/_custom_type_script = "uid://cp4onutc6s0is"
+
+[connection signal="DayChanged" from="TimeManager" to="." method="_on_time_manager_day_changed"]

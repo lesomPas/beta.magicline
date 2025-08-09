@@ -18,7 +18,7 @@ var ground_states: Array[int] = [
 
 var pending_damage: Damage
 
-var default_gravity: float = ProjectSettings.get("physics/2d/default_gravity") as float * 2
+var default_gravity: float = ProjectSettings.get("physics/2d/default_gravity") as float
 
 var direction: float = 1.0:
 	set(value):
@@ -155,7 +155,7 @@ func internal_transition_state(from: int, to: int) -> void:
 
 		PhysicsState.hurt:
 			animation_player.play("hurt")
-			print("of!!!!!!!!!!!!!")
+			pending_damage = null
 
 	_is_first_tick = true
 #endregion

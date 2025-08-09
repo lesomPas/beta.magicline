@@ -1,9 +1,15 @@
-[gd_scene load_steps=15 format=3 uid="uid://b84mqy5i11e66"]
+[gd_scene load_steps=17 format=3 uid="uid://b84mqy5i11e66"]
 
 [ext_resource type="PackedScene" uid="uid://bsx51wa6wxigb" path="res://screens/human.tscn" id="1_5jwn5"]
-[ext_resource type="Script" uid="uid://c7autfgbk8lsh" path="res://classes/entity/player_interface.gd" id="2_5k2th"]
+[ext_resource type="Script" uid="uid://c7autfgbk8lsh" path="res://classes/entity/interface/player_interface.gd" id="2_5k2th"]
 [ext_resource type="Texture2D" uid="uid://dvd684tjn06rk" path="res://assets/sprites/dusk_borne/ncaa_elf_idle.png" id="2_8qnwq"]
+[ext_resource type="Shader" uid="uid://clgu1gwxyx32c" path="res://shader/hit_die.gdshader" id="2_rnd8p"]
 [ext_resource type="Texture2D" uid="uid://nwb8vvpmgufc" path="res://assets/sprites/dusk_borne/ncaa_elf_run.png" id="3_rnd8p"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_wt686"]
+shader = ExtResource("2_rnd8p")
+shader_parameter/opacity_percent = 1.0
+shader_parameter/white_percent = 0.0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_wt686"]
 size = Vector2(13, 39)
@@ -664,6 +670,7 @@ size = Vector2(13, 39)
 collision_layer = 2
 
 [node name="Sprite2D" parent="graphics" index="0"]
+material = SubResource("ShaderMaterial_wt686")
 texture = ExtResource("2_8qnwq")
 hframes = 6
 

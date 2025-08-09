@@ -37,6 +37,6 @@ func get_direction() -> float:
 			var delta_position: Vector2 = npc.direction_to()
 			var dircetion: float = sign(delta_position.x)
 
-			movement = dircetion if delta_position.length() >= 50.0 else 0.0
+			movement = dircetion if delta_position.length() >= 200.0 else 0.0
 
 	return movement

@@ -3,7 +3,7 @@ class_name Block extends Node
 @export var x: int = 0
 @export var y: int = 0
 
-const width: float = 216.0
+const width: float = 648.0
 
 #region initial functions
 func _init(_x: int = 0, _y: int = 0) -> void:
@@ -20,7 +20,7 @@ static func block(_x: int, _y: int) -> Block:
 	return Block.new(_x, _y)
 
 static func blockv(godot_position: Vector2) -> Block:
-	return Block.block(floor(godot_position.x / 16.0), floor((width - godot_position.y) / 16.0))
+	return Block.block(floor(godot_position.x / 64.0), floor((width - godot_position.y) / 64.0))
 #endregion
 
 #region math functions
@@ -50,9 +50,9 @@ func _in_range(value: float, _min: float, _max: float) -> bool:
 	return (value >= _min) and (value <= _max)
 
 func convert_to_position() -> Vector2:
-	return Vector2(x * 16.0, width - y * 16.0)
+	return Vector2(x * 64.0, width - y * 64.0)
 
 func contain(position: Vector2) -> bool:
 	var block_position: Vector2 = convert_to_position()
-	return _in_range(position.x, block_position.x, block_position.x + 16.0) and \
-		   _in_range(position.y, block_position.y - 16.0, block_position.y)
+	return _in_range(position.x, block_position.x, block_position.x + 64.0) and \
+		   _in_range(position.y, block_position.y - 64.0, block_position.y)

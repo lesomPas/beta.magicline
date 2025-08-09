@@ -29,12 +29,18 @@ func _tick_physics(state: int, delta: float) -> void:
 	interface.delay_process(delta)
 	match state:
 		NPCState.follow:
-			pass
+			move(default_gravity, delta)
 
 	_is_first_tick = false
 
 
 func _transition_state(from: int, to: int) -> void:
+	#print("%s seconds: [%s] --> [%s]" % [
+		#Engine.get_physics_frames() % 60,
+		#NPCState.keys()[from] if from != -1 else "start",
+		#NPCState.keys()[to]
+	#])
+
 	if 2 < to and to < 6:
 		self.internal_transition_state(from, to)
 		return
@@ -51,7 +57,7 @@ func _transition_state(from: int, to: int) -> void:
 			interface.turn_back_timer.stop()
 
 		PhysicsState.walk:
-			animation_player.play("run")
+			animation_player.play("walk")
 			if not floor_checker.is_colliding():
 				direction = -1
 				floor_checker.force_raycast_update()
@@ -59,8 +65,9 @@ func _transition_state(from: int, to: int) -> void:
 			interface.turn_back_timer.start()
 
 		NPCState.follow:
+			# run_velocity = 
 			player = player_checker.get_overlapping_bodies()[0]
-			if direction_to().length() >= 50.0:
+			if direction_to().length() >= 200.0:
 				animation_player.play("walk")
 			else:
 				animation_player.play("idle")
@@ -83,6 +90,8 @@ func internal_get_next_state(state: int) -> int:
 		PhysicsState.idle:
 			if interface.should_attack:
 				return PhysicsState.attack
+			if player_checker.has_overlapping_bodies() and Input.is_action_pressed("follow"):
+				return NPCState.follow
 			if not is_still or physics_state_machine.state_time > 7.5:
 				return PhysicsState.walk
 
@@ -91,6 +100,8 @@ func internal_get_next_state(state: int) -> int:
 				return PhysicsState.attack
 			if wall_checker.is_colliding() or not floor_checker.is_colliding():
 				return PhysicsState.idle
+			if player_checker.has_overlapping_bodies() and Input.is_action_pressed("follow"):
+				return NPCState.follow
 			if is_still or physics_state_machine.state_time > 7.5:
 				return PhysicsState.idle
 
