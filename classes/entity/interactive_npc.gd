@@ -21,9 +21,9 @@ func _ready() -> void:
 func direction_to() -> Vector2:
 	return player.global_position - self.global_position
 
-func _tick_physics(state: int, delta: float) -> void:
+func internal_tick_physics(state: int, delta: float) -> void:
 	if state < 6:
-		self.internal_tick_physics(state, delta)
+		super(state, delta)
 		return
 
 	interface.delay_process(delta)
@@ -34,7 +34,7 @@ func _tick_physics(state: int, delta: float) -> void:
 	_is_first_tick = false
 
 
-func _transition_state(from: int, to: int) -> void:
+func internal_transition_state(from: int, to: int) -> void:
 	#print("%s seconds: [%s] --> [%s]" % [
 		#Engine.get_physics_frames() % 60,
 		#NPCState.keys()[from] if from != -1 else "start",
@@ -42,7 +42,7 @@ func _transition_state(from: int, to: int) -> void:
 	#])
 
 	if 2 < to and to < 6:
-		self.internal_transition_state(from, to)
+		super(from, to)
 		return
 
 	if from not in ground_states and to in ground_states:
@@ -132,10 +132,10 @@ func internal_get_next_state(state: int) -> int:
 
 
 func tick_physics(state: int, delta: float) -> void:
-	self._tick_physics(state, delta)
+	self.internal_tick_physics(state, delta)
  
 func get_next_state(state: int) -> int:
 	return self.internal_get_next_state(state)
 
 func transition_state(from: int, to: int) -> void:
-	self._transition_state(from, to)
+	self.internal_transition_state(from, to)

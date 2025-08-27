@@ -3,7 +3,7 @@ class_name Block extends Node
 @export var x: int = 0
 @export var y: int = 0
 
-const width: float = 648.0
+const width: float = 1080.0
 
 #region initial functions
 func _init(_x: int = 0, _y: int = 0) -> void:

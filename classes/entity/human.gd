@@ -13,7 +13,19 @@ var magic_attribute: Attribute
 var stamina_attribute: StaminaAttribute
 
 var body_state: BodyStates = BodyStates.normal:
-	get(): return max(health_attribute.state, stamina_attribute.state)
+	get(): 
+		if direct_body_state != -1:
+			return direct_body_state
+
+		if health_attribute == null or stamina_attribute == null:
+			return BodyStates.normal
+
+		return max(
+			health_attribute.state, 
+			stamina_attribute.state,
+		)
+
+var direct_body_state: BodyStates = -1
 
 @onready var attribute_component: AttributeComponent = $AttributeComponent
 
@@ -24,6 +36,23 @@ func _ready() -> void:
 
 	health_attribute.player = self
 	stamina_attribute.player = self
+
+func body_process() -> void:
+	pass
+
+func skip() -> void:
+	animation_player.play("die")
+
+func internal_get_next_state(state: PhysicsState) -> int:
+	if body_state == BodyStates.skip:
+		if not animation_player.is_playing():
+			get_tree().paused = true
+		return PhysicsStateMachine.KeepCurrent if physics_state_machine.current_state == PhysicsState.skip else PhysicsState.skip 
+	return super(state)
+
+func internal_tick_physics(state: PhysicsState, delta: float) -> void:
+	body_process()
+	super(state, delta)
 
 func commit_information(_information: Dictionary[String, String]) -> void:
 	NameMap.name_map[_information["name"]] = self

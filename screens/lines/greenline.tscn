@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=3 uid="uid://ct8dwsancanty"]
+
+[ext_resource type="Texture2D" uid="uid://dwo8cp8b2swrn" path="res://assets/sprites/line/greenLine.png" id="1_rh0x5"]
+
+[node name="Line2D" type="Line2D"]
+z_index = -1
+points = PackedVector2Array(376, 141, 81, 58)
+width = 3.0
+texture = ExtResource("1_rh0x5")
+texture_mode = 2

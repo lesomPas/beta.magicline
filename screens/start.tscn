@@ -1,17 +1,19 @@
-[gd_scene load_steps=9 format=3 uid="uid://c3k813wvl1a03"]
+[gd_scene load_steps=11 format=3 uid="uid://c3k813wvl1a03"]
 
 [ext_resource type="Script" uid="uid://bm5yl1dilux0j" path="res://classes/start.gd" id="1_f5myi"]
 [ext_resource type="PackedScene" uid="uid://b4kh87dkteog3" path="res://screens/joystick.tscn" id="2_oncuk"]
 [ext_resource type="PackedScene" uid="uid://c14muw5rkx14y" path="res://screens/status_panel.tscn" id="3_oapv3"]
+[ext_resource type="Theme" uid="uid://cr1na82r7vq61" path="res://style/debug.tres" id="3_psehc"]
 [ext_resource type="PackedScene" uid="uid://b84mqy5i11e66" path="res://screens/player.tscn" id="3_y4iue"]
 [ext_resource type="PackedScene" uid="uid://quwqbm1iqsa" path="res://screens/witch.tscn" id="4_tnilg"]
 [ext_resource type="Script" uid="uid://cp4onutc6s0is" path="res://classes/timeManager.gd" id="6_3s0d0"]
+[ext_resource type="Texture2D" uid="uid://dc2pkqmptspwp" path="res://assets/GodotLogoShadow.png" id="8_lit3c"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_tnilg"]
-radius = 100.0
+radius = 150.0
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_tnilg"]
-distance = -648.0
+distance = -1081.0
 
 [node name="start" type="Node2D"]
 script = ExtResource("1_f5myi")
@@ -20,11 +22,10 @@ script = ExtResource("1_f5myi")
 
 [node name="joystick" parent="CanvasLayer" instance=ExtResource("2_oncuk")]
 unique_name_in_owner = true
-position = Vector2(190, 495)
-scale = Vector2(0.659, 0.659)
+position = Vector2(231, 860)
 
 [node name="JumpButton" type="TouchScreenButton" parent="CanvasLayer"]
-position = Vector2(1003, 493)
+position = Vector2(2190, 854)
 shape = SubResource("CircleShape2D_tnilg")
 action = "jump"
 
@@ -39,9 +40,10 @@ metadata/_edit_lock_ = true
 
 [node name="VFlowContainer" type="VFlowContainer" parent="CanvasLayer/Control"]
 layout_mode = 0
-offset_top = 76.0
-offset_right = 318.0
-offset_bottom = 250.0
+offset_top = 161.0
+offset_right = 720.0
+offset_bottom = 423.0
+theme = ExtResource("3_psehc")
 
 [node name="AspectRatioContainer" type="AspectRatioContainer" parent="CanvasLayer/Control/VFlowContainer"]
 layout_mode = 2
@@ -54,8 +56,20 @@ layout_mode = 2
 [node name="PositionLab" type="Label" parent="CanvasLayer/Control/VFlowContainer/AspectRatioContainer/PanelContainer"]
 unique_name_in_owner = true
 layout_mode = 2
-theme_override_font_sizes/font_size = 20
 text = " position::(0, 0) "
+
+[node name="AspectRatioContainer5" type="AspectRatioContainer" parent="CanvasLayer/Control/VFlowContainer"]
+layout_mode = 2
+alignment_horizontal = 0
+alignment_vertical = 0
+
+[node name="PanelContainer" type="PanelContainer" parent="CanvasLayer/Control/VFlowContainer/AspectRatioContainer5"]
+layout_mode = 2
+
+[node name="VelocityLab" type="Label" parent="CanvasLayer/Control/VFlowContainer/AspectRatioContainer5/PanelContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = " velocity: x 0.00/b y 0.00/b"
 
 [node name="AspectRatioContainer2" type="AspectRatioContainer" parent="CanvasLayer/Control/VFlowContainer"]
 layout_mode = 2
@@ -68,8 +82,20 @@ layout_mode = 2
 [node name="StateLab" type="Label" parent="CanvasLayer/Control/VFlowContainer/AspectRatioContainer2/PanelContainer"]
 unique_name_in_owner = true
 layout_mode = 2
-theme_override_font_sizes/font_size = 20
 text = " state: <normal>"
+
+[node name="AspectRatioContainer4" type="AspectRatioContainer" parent="CanvasLayer/Control/VFlowContainer"]
+layout_mode = 2
+alignment_horizontal = 0
+alignment_vertical = 0
+
+[node name="PanelContainer" type="PanelContainer" parent="CanvasLayer/Control/VFlowContainer/AspectRatioContainer4"]
+layout_mode = 2
+
+[node name="AttributeLab" type="Label" parent="CanvasLayer/Control/VFlowContainer/AspectRatioContainer4/PanelContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = " 100.0/100.0h 120.0/120.0m 100.0/100.0s "
 
 [node name="AspectRatioContainer3" type="AspectRatioContainer" parent="CanvasLayer/Control/VFlowContainer"]
 layout_mode = 2
@@ -82,7 +108,6 @@ layout_mode = 2
 [node name="TimeLab" type="Label" parent="CanvasLayer/Control/VFlowContainer/AspectRatioContainer3/PanelContainer"]
 unique_name_in_owner = true
 layout_mode = 2
-theme_override_font_sizes/font_size = 20
 text = " time: 2022-7-12 15:40:03 "
 
 [node name="StatusPanel" parent="CanvasLayer/Control" instance=ExtResource("3_oapv3")]
@@ -93,6 +118,11 @@ offset_top = 22.0
 offset_right = 80.0
 offset_bottom = 48.0
 
+[node name="Sprite2D" type="Sprite2D" parent="CanvasLayer"]
+position = Vector2(2120, 167)
+scale = Vector2(0.3, 0.3)
+texture = ExtResource("8_lit3c")
+
 [node name="StaticBody2D" type="StaticBody2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
@@ -100,21 +130,21 @@ shape = SubResource("WorldBoundaryShape2D_tnilg")
 
 [node name="player" parent="." instance=ExtResource("3_y4iue")]
 unique_name_in_owner = true
-position = Vector2(455, 326)
-scale = Vector2(3, 3)
-run_velocity = 480.0
-jump_velocity = -960.0
+position = Vector2(1204, 868)
+scale = Vector2(5, 5)
+run_velocity = 720.0
 
 [node name="Camera2D" type="Camera2D" parent="player"]
-limit_bottom = 648
+limit_bottom = 1080
 limit_smoothed = true
 position_smoothing_enabled = true
 drag_horizontal_enabled = true
 drag_vertical_enabled = true
 
 [node name="witch" parent="." instance=ExtResource("4_tnilg")]
-position = Vector2(710, 331)
-scale = Vector2(3, 3)
+position = Vector2(967, 846)
+scale = Vector2(5, 5)
+run_velocity = 480.0
 
 [node name="TimeManager" type="Node" parent="."]
 unique_name_in_owner = true

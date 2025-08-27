@@ -7,7 +7,8 @@ enum PhysicsState {
 	jump,
 	fall,
 	attack,
-	hurt
+	hurt,
+	skip
 }
 
 var ground_states: Array[int] = [
@@ -25,8 +26,8 @@ var direction: float = 1.0:
 		direction = value
 		$graphics.scale.x = sign(value)
 
-@export var run_velocity: float = 160.0
-@export var jump_velocity: float = -320.0
+@export var run_velocity: float = 560.0
+@export var jump_velocity: float = -960.0
 
 var floor_acceleration: float = 800.0:
 	get(): return run_velocity * 5
@@ -76,7 +77,7 @@ func internal_tick_physics(state: int, delta: float) -> void:
 		PhysicsState.jump:
 			move(0.0 if _is_first_tick else default_gravity, delta)
 
-		PhysicsState.attack, PhysicsState.hurt:
+		PhysicsState.attack, PhysicsState.hurt, PhysicsState.skip:
 			stand(default_gravity, delta)
 
 	_is_first_tick = false
@@ -157,9 +158,14 @@ func internal_transition_state(from: int, to: int) -> void:
 			animation_player.play("hurt")
 			pending_damage = null
 
+		PhysicsState.skip:
+			skip()
+
 	_is_first_tick = true
 #endregion
 
+func skip() -> void:
+	pass
 
 func tick_physics(state: int, delta: float) -> void:
 	self.internal_tick_physics(state, delta)

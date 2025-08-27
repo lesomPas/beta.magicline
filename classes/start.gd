@@ -5,7 +5,12 @@ extends Node2D
 @onready var pos: Label = %PositionLab
 @onready var state: Label = %StateLab
 @onready var time: Label = %TimeLab
+@onready var attribute_lab: Label = %AttributeLab
+@onready var velocity_lab: Label = %VelocityLab
+@onready var witch: CharacterBody2D = $witch
+
 @onready var time_manager: TimeManager = %TimeManager
+@onready var player: Player = %player
 
 var _day_time: String = ""
 var _days: int = 0
@@ -27,6 +32,15 @@ func _process(delta: float) -> void:
 		_day_time,
 		time_manager.format_daily_time(),
 		_days
+	]
+	attribute_lab.text = " %.2f/100.0h %.2f/120.0m %.2f/100.0s " % [
+		player.health_attribute.value(),
+		player.magic_attribute.value(),
+		player.stamina_attribute.value()
+	]
+	velocity_lab.text = " velocity: x %.2f/b y %.2f/b " % [
+		player.velocity.x / 64.0,
+		player.velocity.y / 64.0
 	]
 
 
