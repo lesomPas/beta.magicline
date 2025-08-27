@@ -6,7 +6,7 @@
 [ext_resource type="Theme" uid="uid://cr1na82r7vq61" path="res://style/debug.tres" id="3_psehc"]
 [ext_resource type="PackedScene" uid="uid://b84mqy5i11e66" path="res://screens/player.tscn" id="3_y4iue"]
 [ext_resource type="PackedScene" uid="uid://quwqbm1iqsa" path="res://screens/witch.tscn" id="4_tnilg"]
-[ext_resource type="Script" uid="uid://cp4onutc6s0is" path="res://classes/timeManager.gd" id="6_3s0d0"]
+[ext_resource type="Script" uid="uid://cp4onutc6s0is" path="res://classes/time_manager.gd" id="6_3s0d0"]
 [ext_resource type="Texture2D" uid="uid://dc2pkqmptspwp" path="res://assets/GodotLogoShadow.png" id="8_lit3c"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_tnilg"]
