@@ -169,7 +169,7 @@ func skip() -> void:
 
 func tick_physics(state: int, delta: float) -> void:
 	self.internal_tick_physics(state, delta)
- 
+
 func get_next_state(state: int) -> int:
 	return self.internal_get_next_state(state)
 

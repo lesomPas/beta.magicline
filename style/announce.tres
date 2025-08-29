@@ -1,0 +1,11 @@
+[gd_resource type="Theme" load_steps=2 format=3 uid="uid://2r48ralvxbqv"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_coqe4"]
+bg_color = Color(0.588235, 0.564706, 0.819608, 0.498039)
+draw_center = false
+border_width_bottom = 5
+border_color = Color(0.713726, 0.803922, 0.956863, 0.831373)
+
+[resource]
+Label/font_sizes/font_size = 40
+Label/styles/normal = SubResource("StyleBoxFlat_coqe4")

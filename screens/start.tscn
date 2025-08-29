@@ -1,31 +1,49 @@
-[gd_scene load_steps=11 format=3 uid="uid://c3k813wvl1a03"]
+[gd_scene load_steps=16 format=3 uid="uid://c3k813wvl1a03"]
 
 [ext_resource type="Script" uid="uid://bm5yl1dilux0j" path="res://classes/start.gd" id="1_f5myi"]
 [ext_resource type="PackedScene" uid="uid://b4kh87dkteog3" path="res://screens/joystick.tscn" id="2_oncuk"]
+[ext_resource type="Texture2D" uid="uid://fsj45qjijw8m" path="res://assets/ui/jump/normal_up.png" id="3_32bci"]
 [ext_resource type="PackedScene" uid="uid://c14muw5rkx14y" path="res://screens/status_panel.tscn" id="3_oapv3"]
 [ext_resource type="Theme" uid="uid://cr1na82r7vq61" path="res://style/debug.tres" id="3_psehc"]
 [ext_resource type="PackedScene" uid="uid://b84mqy5i11e66" path="res://screens/player.tscn" id="3_y4iue"]
+[ext_resource type="Texture2D" uid="uid://bwu6tuuvyasr2" path="res://assets/ui/jump/pressed_up.png" id="4_fa667"]
 [ext_resource type="PackedScene" uid="uid://quwqbm1iqsa" path="res://screens/witch.tscn" id="4_tnilg"]
 [ext_resource type="Script" uid="uid://cp4onutc6s0is" path="res://classes/time_manager.gd" id="6_3s0d0"]
 [ext_resource type="Texture2D" uid="uid://dc2pkqmptspwp" path="res://assets/GodotLogoShadow.png" id="8_lit3c"]
+[ext_resource type="Script" uid="uid://bpg2eqywbpywq" path="res://classes/announce_manager.gd" id="9_6nevn"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_tnilg"]
-radius = 150.0
+radius = 121.9
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_tnilg"]
 distance = -1081.0
 
+[sub_resource type="GDScript" id="GDScript_32bci"]
+script/source = "extends InteractableObject
+
+func interact(human: Human) -> void:
+	human.velocity.y = -12000.0
+"
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_fa667"]
+radius = 224.199
+
 [node name="start" type="Node2D"]
 script = ExtResource("1_f5myi")
+metadata/_edit_horizontal_guides_ = [966.0]
+metadata/_edit_vertical_guides_ = [450.0, 2020.0]
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
 [node name="joystick" parent="CanvasLayer" instance=ExtResource("2_oncuk")]
 unique_name_in_owner = true
-position = Vector2(231, 860)
+position = Vector2(262, 781)
 
 [node name="JumpButton" type="TouchScreenButton" parent="CanvasLayer"]
-position = Vector2(2190, 854)
+position = Vector2(1958, 768)
+scale = Vector2(0.8, 0.8)
+texture_normal = ExtResource("3_32bci")
+texture_pressed = ExtResource("4_fa667")
 shape = SubResource("CircleShape2D_tnilg")
 action = "jump"
 
@@ -44,6 +62,19 @@ offset_top = 161.0
 offset_right = 720.0
 offset_bottom = 423.0
 theme = ExtResource("3_psehc")
+
+[node name="AspectRatioContainer6" type="AspectRatioContainer" parent="CanvasLayer/Control/VFlowContainer"]
+layout_mode = 2
+alignment_horizontal = 0
+alignment_vertical = 0
+
+[node name="PanelContainer" type="PanelContainer" parent="CanvasLayer/Control/VFlowContainer/AspectRatioContainer6"]
+layout_mode = 2
+
+[node name="FPSLab" type="Label" parent="CanvasLayer/Control/VFlowContainer/AspectRatioContainer6/PanelContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = " FPS:  0 "
 
 [node name="AspectRatioContainer" type="AspectRatioContainer" parent="CanvasLayer/Control/VFlowContainer"]
 layout_mode = 2
@@ -118,9 +149,19 @@ offset_top = 22.0
 offset_right = 80.0
 offset_bottom = 48.0
 
+[node name="VersionLab" type="Label" parent="CanvasLayer/Control"]
+unique_name_in_owner = true
+layout_mode = 2
+offset_left = 1656.0
+offset_top = 1019.0
+offset_right = 2268.0
+offset_bottom = 1059.0
+theme = ExtResource("3_psehc")
+text = " 测试版 / ver 0.11.02-cycle1.beta "
+
 [node name="Sprite2D" type="Sprite2D" parent="CanvasLayer"]
-position = Vector2(2120, 167)
-scale = Vector2(0.3, 0.3)
+position = Vector2(1575, 1020)
+scale = Vector2(0.1, 0.1)
 texture = ExtResource("8_lit3c")
 
 [node name="StaticBody2D" type="StaticBody2D" parent="."]
@@ -130,8 +171,8 @@ shape = SubResource("WorldBoundaryShape2D_tnilg")
 
 [node name="player" parent="." instance=ExtResource("3_y4iue")]
 unique_name_in_owner = true
-position = Vector2(1204, 868)
-scale = Vector2(5, 5)
+position = Vector2(1210, 814)
+scale = Vector2(8, 8)
 run_velocity = 720.0
 
 [node name="Camera2D" type="Camera2D" parent="player"]
@@ -143,12 +184,28 @@ drag_vertical_enabled = true
 
 [node name="witch" parent="." instance=ExtResource("4_tnilg")]
 position = Vector2(967, 846)
-scale = Vector2(5, 5)
+scale = Vector2(8, 8)
 run_velocity = 480.0
 
 [node name="TimeManager" type="Node" parent="."]
 unique_name_in_owner = true
 script = ExtResource("6_3s0d0")
 metadata/_custom_type_script = "uid://cp4onutc6s0is"
+
+[node name="AnnuonceManager" type="CanvasLayer" parent="."]
+script = ExtResource("9_6nevn")
+metadata/_custom_type_script = "uid://bpg2eqywbpywq"
+
+[node name="InteractableObject" type="Area2D" parent="."]
+script = SubResource("GDScript_32bci")
+player_enable = false
+no_lab = true
+no_outline = true
+immediate_interact = true
+metadata/_custom_type_script = "uid://c6mmb1x4bcjjc"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="InteractableObject"]
+position = Vector2(2584, 918)
+shape = SubResource("CircleShape2D_fa667")
 
 [connection signal="DayChanged" from="TimeManager" to="." method="_on_time_manager_day_changed"]

@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://b84mqy5i11e66"]
+[gd_scene load_steps=20 format=3 uid="uid://b84mqy5i11e66"]
 
 [ext_resource type="PackedScene" uid="uid://bsx51wa6wxigb" path="res://screens/human.tscn" id="1_5jwn5"]
 [ext_resource type="Script" uid="uid://c7autfgbk8lsh" path="res://classes/entity/interface/player_interface.gd" id="2_5k2th"]
@@ -758,8 +758,6 @@ _data = {
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_8qnwq"]
 size = Vector2(13, 39)
 
-[sub_resource type="SpriteFrames" id="SpriteFrames_wt686"]
-
 [node name="entity" instance=ExtResource("1_5jwn5")]
 collision_layer = 2
 script = ExtResource("2_wt686")
@@ -798,6 +796,3 @@ shape = SubResource("RectangleShape2D_8qnwq")
 
 [node name="MotionInterface" parent="." index="3"]
 script = ExtResource("2_5k2th")
-
-[node name="InteractiomIcon" type="AnimatedSprite2D" parent="." index="6"]
-sprite_frames = SubResource("SpriteFrames_wt686")

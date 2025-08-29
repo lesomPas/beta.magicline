@@ -1,0 +1,15 @@
+
+
+beta.magicline 0.11.01.beta 2025.8.28 update:
+系统内容:
+  1.增加AnnounceManager / 通知系统
+  2.增加TimeManager / 时间系统
+  3.显示调试信息(以后撤除)
+  4.增加Interactable(可互动性)相关接口
+  5.移除NotificationManager(有bug)
+
+组件内容:
+  1.增加Queue队列
+  2.增加ExtendedCamera(扩展相机, 目前功能有震动)
+
+之所以这么多是因为之前的有些没说( )

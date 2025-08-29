@@ -14,12 +14,6 @@ func _unhandled_input(event: InputEvent) -> void:
 		if owner.velocity.y < owner.jump_velocity / 2:
 			owner.velocity.y = owner.jump_velocity / 2
 
-	if Input.is_action_pressed("interact") and !owner.interacting_with.is_empty():
-		owner.interacting_with.back().interact()
-
-	if Input.is_key_pressed(KEY_R):
-		owner.health_attribute.subtract(10.0)
-		owner.stamina_attribute.set_value(0.0)
 
 func delay_process(delta: float) -> void:
 	should_attack = false

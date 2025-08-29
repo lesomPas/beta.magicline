@@ -1,6 +1,6 @@
 class_name AnnuonceManager extends CanvasLayer
 
-@export var wait_duration: float = 4.0  # 在屏幕右侧等待的时间
+@export var wait_duration: float = 2.5  # 在屏幕右侧等待的时间
 @export var move_duration: float = 0.5  # 移动动画持续时间
 
 var notifications: Queue = Queue.new()
@@ -10,8 +10,7 @@ var exit_labels: Queue = Queue.new()
 
 func annuonce(content: String) -> void:
 	notifications.put_item(content)
-	if labels.empty():
-		show_annuonce()
+	show_annuonce()
 
 func show_annuonce() -> void:
 	if notifications.empty():
@@ -22,7 +21,7 @@ func show_annuonce() -> void:
 	var label: Label = Label.new()
 	label.visible = false
 	label.text = content
-	label.add_theme_font_size_override("font_size", 40.0)
+	label.theme = load("res://style/announce.tres")
 
 	self.add_child(label)
 	lower_announce()
@@ -30,7 +29,7 @@ func show_annuonce() -> void:
 
 	var viewport_size = get_viewport().get_visible_rect().size
 	label.position.x = label.size.x + viewport_size.x
-	label.position.y = 0
+	label.position.y = 10.0
 	label.visible = true
 
 	var tween: Tween = create_tween().set_trans(Tween.TRANS_CIRC)

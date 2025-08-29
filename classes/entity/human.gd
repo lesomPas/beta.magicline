@@ -26,6 +26,7 @@ var body_state: BodyStates = BodyStates.normal:
 		)
 
 var direct_body_state: BodyStates = -1
+var interactable_objs: Array[InteractableObject] = []
 
 @onready var attribute_component: AttributeComponent = $AttributeComponent
 
@@ -39,6 +40,19 @@ func _ready() -> void:
 
 func body_process() -> void:
 	pass
+
+func register_interactable(interactalbe_obj: InteractableObject) -> void:
+	if !interactable_objs.is_empty():
+		interactable_objs.back().lab_visible = false
+	if interactalbe_obj not in interactable_objs:
+		interactalbe_obj.lab_visible = true
+		interactable_objs.append(interactalbe_obj)
+
+func unregister_interactable(interactable_obj: InteractableObject) -> void:
+	interactable_objs.erase(interactable_obj)
+	interactable_obj.lab_visible = false
+	if !interactable_objs.is_empty():
+		interactable_objs.back().lab_visible = true
 
 func skip() -> void:
 	animation_player.play("die")

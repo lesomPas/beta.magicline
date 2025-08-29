@@ -1,13 +1,15 @@
-[gd_scene load_steps=4 format=3 uid="uid://b4kh87dkteog3"]
+[gd_scene load_steps=5 format=3 uid="uid://b4kh87dkteog3"]
 
 [ext_resource type="Texture2D" uid="uid://ci5111tve8u8i" path="res://assets/ui/joystick/radius.png" id="1_sukbi"]
 [ext_resource type="Script" uid="uid://cu6bu00fatgcr" path="res://classes/user_interface/joystick.gd" id="2_k3nps"]
-[ext_resource type="Texture2D" uid="uid://du4iebyehx0y0" path="res://assets/ui/joystick/button.png" id="3_b7jds"]
+[ext_resource type="Texture2D" uid="uid://b0lhigxpia44g" path="res://assets/ui/joystick/normal_button.png" id="3_k3nps"]
+[ext_resource type="Texture2D" uid="uid://cv4jg5g2lxgse" path="res://assets/ui/joystick/pressed_button.png" id="4_b7jds"]
 
 [node name="joystick" type="Sprite2D"]
 texture = ExtResource("1_sukbi")
 script = ExtResource("2_k3nps")
+normal_texture = ExtResource("3_k3nps")
+pressed_texture = ExtResource("4_b7jds")
 
 [node name="point" type="Sprite2D" parent="."]
-scale = Vector2(1.25, 1.25)
-texture = ExtResource("3_b7jds")
+texture = ExtResource("3_k3nps")
