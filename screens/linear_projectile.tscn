@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://d1v23coj183pt"]
+
+[ext_resource type="Script" uid="uid://ner3gn67pl6c" path="res://classes/linear_projectile.gd" id="1_t6dt5"]
+
+[node name="LinearProjectile" type="Area2D"]
+script = ExtResource("1_t6dt5")
+metadata/_custom_type_script = "uid://hlk3545pf0av"
+
+[connection signal="hit" from="." to="." method="_on_hit"]

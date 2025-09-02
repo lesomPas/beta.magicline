@@ -178,4 +178,4 @@ func transition_state(from: int, to: int) -> void:
 
 
 func _on_hurtbox_hurt(hitbox: Hitbox) -> void:
-	pending_damage = Damage.new(10.0, hitbox.owner)
+	pending_damage = Damage.new(hitbox.amount, hitbox.owner)

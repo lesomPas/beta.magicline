@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://c3k813wvl1a03"]
+[gd_scene load_steps=20 format=3 uid="uid://c3k813wvl1a03"]
 
 [ext_resource type="Script" uid="uid://bm5yl1dilux0j" path="res://classes/start.gd" id="1_f5myi"]
 [ext_resource type="PackedScene" uid="uid://b4kh87dkteog3" path="res://screens/joystick.tscn" id="2_oncuk"]
@@ -11,6 +11,9 @@
 [ext_resource type="Script" uid="uid://cp4onutc6s0is" path="res://classes/time_manager.gd" id="6_3s0d0"]
 [ext_resource type="Texture2D" uid="uid://dc2pkqmptspwp" path="res://assets/GodotLogoShadow.png" id="8_lit3c"]
 [ext_resource type="Script" uid="uid://bpg2eqywbpywq" path="res://classes/announce_manager.gd" id="9_6nevn"]
+[ext_resource type="Script" uid="uid://ner3gn67pl6c" path="res://classes/linear_projectile.gd" id="12_60g7n"]
+[ext_resource type="Texture2D" uid="uid://cfhglhkl0xu2h" path="res://assets/icon.svg" id="13_7wse2"]
+[ext_resource type="Script" uid="uid://hlk3545pf0av" path="res://classes/entity/hitbox.gd" id="14_7wse2"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_tnilg"]
 radius = 121.9
@@ -22,11 +25,14 @@ distance = -1081.0
 script/source = "extends InteractableObject
 
 func interact(human: Human) -> void:
-	human.velocity.y = -12000.0
+	$\"../AnnuonceManager\".annuonce(\"interacted!!!!!!!!!\")
 "
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_fa667"]
 radius = 224.199
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_av2vi"]
+radius = 76.896
 
 [node name="start" type="Node2D"]
 script = ExtResource("1_f5myi")
@@ -171,7 +177,7 @@ shape = SubResource("WorldBoundaryShape2D_tnilg")
 
 [node name="player" parent="." instance=ExtResource("3_y4iue")]
 unique_name_in_owner = true
-position = Vector2(1210, 814)
+position = Vector2(1228, 739)
 scale = Vector2(8, 8)
 run_velocity = 720.0
 
@@ -198,7 +204,7 @@ metadata/_custom_type_script = "uid://bpg2eqywbpywq"
 
 [node name="InteractableObject" type="Area2D" parent="."]
 script = SubResource("GDScript_32bci")
-player_enable = false
+npc_enable = false
 no_lab = true
 no_outline = true
 immediate_interact = true
@@ -207,5 +213,23 @@ metadata/_custom_type_script = "uid://c6mmb1x4bcjjc"
 [node name="CollisionShape2D" type="CollisionShape2D" parent="InteractableObject"]
 position = Vector2(2584, 918)
 shape = SubResource("CircleShape2D_fa667")
+
+[node name="LinearProjectile" type="Area2D" parent="."]
+position = Vector2(-127, 736)
+script = ExtResource("12_60g7n")
+metadata/_custom_type_script = "uid://ner3gn67pl6c"
+
+[node name="Sprite2D" type="Sprite2D" parent="LinearProjectile"]
+texture = ExtResource("13_7wse2")
+
+[node name="Hitbox" type="Area2D" parent="LinearProjectile"]
+collision_layer = 0
+collision_mask = 24
+script = ExtResource("14_7wse2")
+amount = 80.0
+metadata/_custom_type_script = "uid://hlk3545pf0av"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="LinearProjectile/Hitbox"]
+shape = SubResource("CircleShape2D_av2vi")
 
 [connection signal="DayChanged" from="TimeManager" to="." method="_on_time_manager_day_changed"]

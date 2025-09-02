@@ -2,8 +2,20 @@ class_name InteractableObject extends Area2D
 
 signal interacted
 
-@export var player_enable: bool = true
-@export var npc_enable: bool = true
+@export var enable: bool = true:
+	set(value):
+		enable = value
+		self.monitoring = value
+
+@export var player_enable: bool = true:
+	set(value):
+		set_collision_mask_value(2, value)
+		player_enable = value
+
+@export var npc_enable: bool = true:
+	set(value):
+		set_collision_mask_value(3, value)
+		npc_enable = value
 
 @export var no_lab: bool = false
 @export var tip: String = ""

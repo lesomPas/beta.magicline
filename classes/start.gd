@@ -23,6 +23,7 @@ var _days: int = 0
 func _ready() -> void:
 	_day_time = time_manager.format_day_time()
 	joystick.global_radius = joystick.radius * joystick.scale.x
+	# $LinearProjectile.setup(Vector2(2,2))
 
 
 func _process(delta: float) -> void:
