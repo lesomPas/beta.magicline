@@ -23,11 +23,14 @@ signal interacted
 
 @export var immediate_interact: bool = false
 
+@onready var sprite2d: Sprite2D = $Sprite2D
+@onready var label = $Label
+
 var lab_visible: bool = false:
 	set(value):
 		if no_lab:
 			return
-		$Label.visible = value
+		label.visible = value
 		lab_visible = value
 
 func _ready() -> void:
@@ -43,11 +46,17 @@ func _ready() -> void:
 		_on_body_exited
 	)
 
+	if has_node("Label"):
+		get_node("Label").visible = false
+
 	if !no_lab:
-		$Label.theme = load("res://style/tip.tres")
+		$Label.add_theme_stylebox_override("normal", preload("res://style/tip.tres"))
 		$Label.text = "  " + tip + "  "
 	if !no_outline:
-		$Sprite2D.material = load("res://shader/sprite_outline.gdshader")
+		var sm: ShaderMaterial = ShaderMaterial.new()
+		sm.shader = preload("res://shader/sprite_outline.gdshader")
+		sm.set_shader_parameter("outline_width", 0.0)
+		$Sprite2D.material = sm
 
 func interact(human: Human) -> void:
 	print("[Intercated] %s" % name)
@@ -56,11 +65,11 @@ func interact(human: Human) -> void:
 func _on_body_entered(human: Human) -> void:
 	human.register_interactable(self)
 	if !no_outline:
-		$Sprite2D.set_instance_shader_parameter("shader_parameter/outline_width", 1.0)
+		sprite2d.material.set_shader_parameter("outline_width", 1.0)
 	if immediate_interact:
 		interact(human)
 
 func _on_body_exited(human: Human) -> void:
 	human.unregister_interactable(self)
 	if !no_outline:
-		$Sprite2D.set_instance_shader_parameter("shader_parameter/outline_width", 0.0)
+		sprite2d.material.set_shader_parameter("outline_width", 0.0)
