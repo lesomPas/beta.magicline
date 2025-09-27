@@ -87,7 +87,7 @@ func internal_get_next_state(state: int) -> int:
 	if pending_damage:
 		return PhysicsState.hurt
 
-	var can_jump: bool = is_on_floor() or interface.coyote_timer.time_left > 0
+	var can_jump: bool = is_on_floor() or interface.coyote_timer.time_left >= 0
 	if can_jump and interface.jump_request_timer.time_left > 0:
 		return PhysicsState.jump
 
@@ -139,7 +139,7 @@ func internal_transition_state(from: int, to: int) -> void:
 		
 		PhysicsState.walk:
 			animation_player.play("walk")
-		
+
 		PhysicsState.jump:
 			animation_player.play("jump")
 			velocity.y = jump_velocity

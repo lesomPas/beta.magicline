@@ -41,7 +41,7 @@ func internal_transition_state(from: int, to: int) -> void:
 		#NPCState.keys()[to]
 	#])
 
-	if 2 < to and to < 6:
+	if to == -1 || ( to >= 2 and to != 6):
 		super(from, to)
 		return
 

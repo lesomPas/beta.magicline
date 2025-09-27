@@ -21,6 +21,11 @@ func change_movement() -> float:
 	var alpha_movement = randf_range(0.75, 1.25)
 	return alpha_movement - 2.0 if alpha_movement > 1 else alpha_movement
 
+func jmup() -> void:
+	jump_request_timer.start()
+	#await get_tree().create_timer(0.05).timeout
+	#jump_request_timer.stop()
+
 func get_direction() -> float:
 	match physics_state_machine.current_state:
 		npc.PhysicsState.idle:

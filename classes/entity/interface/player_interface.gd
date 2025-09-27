@@ -14,6 +14,9 @@ func _unhandled_input(event: InputEvent) -> void:
 		if owner.velocity.y < owner.jump_velocity / 2:
 			owner.velocity.y = owner.jump_velocity / 2
 
+		#var witch: InteractiveNPC = NameMap.name_map.get("sb")
+		#witch.interface.jump()
+
 	if Input.is_action_just_pressed("interact"):
 		var interactable_obj: InteractableObject = get_parent().interactable_objs.back()
 		if !interactable_obj.immediate_interact:
