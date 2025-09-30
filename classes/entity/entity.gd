@@ -87,7 +87,7 @@ func internal_get_next_state(state: int) -> int:
 	if pending_damage:
 		return PhysicsState.hurt
 
-	var can_jump: bool = is_on_floor() or interface.coyote_timer.time_left >= 0
+	var can_jump: bool = is_on_floor() or interface.coyote_timer.time_left > 0
 	if can_jump and interface.jump_request_timer.time_left > 0:
 		return PhysicsState.jump
 

@@ -1,6 +1,6 @@
 extends MotionInterface
 
-@onready var joystick := get_node("/root/start/CanvasLayer/joystick")
+@onready var joystick := get_node("/root/start/CanvasLayer/Control2/joystick")
 
 func _unhandled_input(event: InputEvent) -> void:
 	if Input.is_action_just_pressed("attack"):

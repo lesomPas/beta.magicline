@@ -1,4 +1,10 @@
 
+beta.magicline 0.11.03-cycle2.beta 2025.9.27 update:
+系统内容:
+  1.修复InteractiveNPC在跳跃上的处理问题
+  2.加入dialogc2作为剧情管理器
+
+
 beta.magicline 0.11.02-cycle1.beta 2025.9.7 update:
 系统内容:
   1.UserInterface 更新
