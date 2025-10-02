@@ -1,8 +1,41 @@
-[gd_scene load_steps=4 format=3 uid="uid://bkxtmrxheopbh"]
+[gd_scene load_steps=12 format=3 uid="uid://bkxtmrxheopbh"]
 
 [ext_resource type="PackedScene" uid="uid://bsx51wa6wxigb" path="res://screens/human.tscn" id="1_e81ej"]
 [ext_resource type="Script" uid="uid://d1rds4fddc7iq" path="res://classes/entity/interactive_npc.gd" id="2_7206x"]
 [ext_resource type="Script" uid="uid://bp12x5c03r4m5" path="res://classes/entity/interface/automatic.gd" id="3_6cdc5"]
+[ext_resource type="Script" uid="uid://bmnuv5bs6auqp" path="res://classes/attribute/attribute.gd" id="4_nyl3r"]
+[ext_resource type="Script" uid="uid://d12lu86r7qbg" path="res://classes/attribute/attributes/health.gd" id="5_y1vpv"]
+[ext_resource type="Script" uid="uid://cr62nmy4ogdew" path="res://classes/attribute/attributes/stamina.gd" id="6_brmoa"]
+[ext_resource type="Script" uid="uid://yeiwlf2g3ea7" path="res://classes/attribute/attribute_collection.gd" id="7_4lt2h"]
+
+[sub_resource type="Resource" id="Resource_4oo1q"]
+script = ExtResource("5_y1vpv")
+attribute_name = "health"
+base_value = 100.0
+lower_limit = 0.0
+upper_limit = 100.0
+metadata/_custom_type_script = "uid://d12lu86r7qbg"
+
+[sub_resource type="Resource" id="Resource_wowuo"]
+script = ExtResource("4_nyl3r")
+attribute_name = "magic"
+base_value = 120.0
+lower_limit = 0.0
+upper_limit = 120.0
+metadata/_custom_type_script = "uid://bmnuv5bs6auqp"
+
+[sub_resource type="Resource" id="Resource_y001b"]
+script = ExtResource("6_brmoa")
+attribute_name = "stamina"
+base_value = 100.0
+lower_limit = 0.0
+upper_limit = 100.0
+metadata/_custom_type_script = "uid://cr62nmy4ogdew"
+
+[sub_resource type="Resource" id="Resource_g30c8"]
+script = ExtResource("7_4lt2h")
+attributes = Array[ExtResource("4_nyl3r")]([SubResource("Resource_4oo1q"), SubResource("Resource_wowuo"), SubResource("Resource_y001b")])
+metadata/_custom_type_script = "uid://yeiwlf2g3ea7"
 
 [node name="entity" instance=ExtResource("1_e81ej")]
 collision_layer = 4
@@ -26,3 +59,6 @@ collision_mask = 2
 script = ExtResource("3_6cdc5")
 
 [node name="TurnBackTimer" type="Timer" parent="MotionInterface" index="2"]
+
+[node name="AttributeComponent" parent="." index="3"]
+attribute_collection = SubResource("Resource_g30c8")

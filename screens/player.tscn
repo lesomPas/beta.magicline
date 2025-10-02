@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://b84mqy5i11e66"]
+[gd_scene load_steps=28 format=3 uid="uid://b84mqy5i11e66"]
 
 [ext_resource type="PackedScene" uid="uid://bsx51wa6wxigb" path="res://screens/human.tscn" id="1_5jwn5"]
 [ext_resource type="Script" uid="uid://c7autfgbk8lsh" path="res://classes/entity/interface/player_interface.gd" id="2_5k2th"]
@@ -7,6 +7,10 @@
 [ext_resource type="Script" uid="uid://du4lf7fmkm2e4" path="res://classes/entity/player.gd" id="2_wt686"]
 [ext_resource type="Texture2D" uid="uid://nwb8vvpmgufc" path="res://assets/sprites/dusk_borne/ncaa_elf_run.png" id="3_rnd8p"]
 [ext_resource type="Texture2D" uid="uid://bf630d0il71ch" path="res://assets/sprites/dusk_borne/ncaa_elf_death.png" id="5_qf26e"]
+[ext_resource type="Script" uid="uid://bmnuv5bs6auqp" path="res://classes/attribute/attribute.gd" id="8_gsa0h"]
+[ext_resource type="Script" uid="uid://d12lu86r7qbg" path="res://classes/attribute/attributes/health.gd" id="9_khmpe"]
+[ext_resource type="Script" uid="uid://cr62nmy4ogdew" path="res://classes/attribute/attributes/stamina.gd" id="10_dul1j"]
+[ext_resource type="Script" uid="uid://yeiwlf2g3ea7" path="res://classes/attribute/attribute_collection.gd" id="11_3p72b"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_wt686"]
 shader = ExtResource("2_rnd8p")
@@ -758,6 +762,35 @@ _data = {
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_8qnwq"]
 size = Vector2(13, 39)
 
+[sub_resource type="Resource" id="Resource_4oo1q"]
+script = ExtResource("9_khmpe")
+attribute_name = "health"
+base_value = 100.0
+lower_limit = 0.0
+upper_limit = 100.0
+metadata/_custom_type_script = "uid://d12lu86r7qbg"
+
+[sub_resource type="Resource" id="Resource_wowuo"]
+script = ExtResource("8_gsa0h")
+attribute_name = "magic"
+base_value = 120.0
+lower_limit = 0.0
+upper_limit = 120.0
+metadata/_custom_type_script = "uid://bmnuv5bs6auqp"
+
+[sub_resource type="Resource" id="Resource_y001b"]
+script = ExtResource("10_dul1j")
+attribute_name = "stamina"
+base_value = 100.0
+lower_limit = 0.0
+upper_limit = 100.0
+metadata/_custom_type_script = "uid://cr62nmy4ogdew"
+
+[sub_resource type="Resource" id="Resource_s771n"]
+script = ExtResource("11_3p72b")
+attributes = Array[ExtResource("8_gsa0h")]([SubResource("Resource_4oo1q"), SubResource("Resource_wowuo"), SubResource("Resource_y001b")])
+metadata/_custom_type_script = "uid://yeiwlf2g3ea7"
+
 [node name="entity" instance=ExtResource("1_5jwn5")]
 collision_layer = 2
 script = ExtResource("2_wt686")
@@ -796,3 +829,6 @@ shape = SubResource("RectangleShape2D_8qnwq")
 
 [node name="MotionInterface" parent="." index="3"]
 script = ExtResource("2_5k2th")
+
+[node name="AttributeComponent" parent="." index="4"]
+attribute_collection = SubResource("Resource_s771n")

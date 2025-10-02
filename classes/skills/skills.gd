@@ -57,6 +57,10 @@ func effect(objects: Array[Human]) -> void:
 		# 有延续性但不满足条件, 且进行入循环检测或者不满足条件立即停止
 		elif only_enter_conditional || loop_conditional_stop:
 			stopped.emit(objs)
+		return
+
+	finished.emit(objs)
+
 
 
 func _physics_process(delta: float) -> void:

@@ -12,28 +12,28 @@ extends Node2D
 
 @onready var witch: CharacterBody2D = $witch
 
-@onready var time_manager: TimeManager = %TimeManager
 @onready var player: Player = %player
-@onready var annuonce_manager: AnnuonceManager = $AnnuonceManager
 @onready var debug_labs: VFlowContainer = $CanvasLayer/Control/VFlowContainer
 
 var _day_time: String = ""
 var _days: int = 0
 
 func _ready() -> void:
-	_day_time = time_manager.format_day_time()
+	MagiclineDirector.connect_signal(
+		MagiclineDirector.get_time_manager(),
+		"day_changed",
+		_on_day_changed
+	)
+
+	_day_time = MagiclineDirector.get_format_day_time()
 	joystick.global_radius = joystick.radius * joystick.scale.x
-	# $LinearProjectile.setup(Vector2(2,2))
 
 
 func _process(delta: float) -> void:
 	if Input.is_action_just_pressed("debug"):
 		var p: bool = !debug_labs.visible
 		debug_labs.visible = p
-		if p:
-			annuonce_manager.annuonce("Debug Mode is on")
-		else:
-			annuonce_manager.annuonce("Debug Mode is off")
+		MagiclineDirector.set_debug_mode(p)
 
 	var block: Block = Block.blockv(%player.global_position)
 	pos.text = " position::(%s, %s) " % [
@@ -45,7 +45,7 @@ func _process(delta: float) -> void:
 	]
 	time.text = " time: %s %s days: %d " % [
 		_day_time,
-		time_manager.format_daily_time(),
+		MagiclineDirector.get_format_daily_time(),
 		_days
 	]
 	attribute_lab.text = " %.2f/100.0h %.2f/120.0m %.2f/100.0s " % [
@@ -60,6 +60,7 @@ func _process(delta: float) -> void:
 	fps_lab.text = " FPS: %d " % Engine.get_frames_per_second()
 	version_lab.text = " 测试版 / ver %s " % ProjectSettings.get("application/config/version")
 
-func _on_time_manager_day_changed(days: int) -> void:
-	_day_time = time_manager.format_day_time()
+
+func _on_day_changed(days: int) -> void:
+	_day_time = MagiclineDirector.get_format_day_time()
 	_days = days

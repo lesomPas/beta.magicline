@@ -1,10 +1,10 @@
 extends Sprite2D
 
-var enabled: bool = true:
+var enabled: bool = true
+var visibility: bool = true:
 	set(value):
 		self.visible = value
 		$point.visible = value
-		enabled = value
 
 var radius: float = self.texture.get_size().x / 2
 var global_radius: float = 0.0
@@ -16,12 +16,18 @@ var ondarging: int = -1
 @export var pressed_texture: Texture2D  # 选中状态纹理
 
 func _ready() -> void:
-	# 确保有默认纹理
+	MagiclineDirector.connect_signal(
+		MagiclineDirector.get_ui_manager(),
+		"ui_block_changed",
+		_on_ui_block_changed
+	)
 	if normal_texture:
 		$point.texture = normal_texture
 
 func _input(event: InputEvent) -> void:
 	if not enabled:
+		if ondarging != -1:
+			_return_point(event)
 		return
 
 	if event is InputEventScreenDrag or (event is InputEventScreenTouch and event.is_pressed()):
@@ -40,14 +46,18 @@ func _input(event: InputEvent) -> void:
 
 	if event is InputEventScreenTouch and !event.is_pressed():
 		if event.get_index() == ondarging:
-			ondarging = -1
+			_return_point(event)
 
-			# 恢复为正常纹理
-			if normal_texture:
-				$point.texture = normal_texture
 
-			var tween = get_tree().create_tween() 
-			tween.tween_property($point, "position", Vector2.ZERO, recovery_time).set_trans(Tween.TRANS_CIRC)
+func _return_point(event: InputEvent) -> void:
+	ondarging = -1
+	$point.texture = normal_texture
+
+	var tween = get_tree().create_tween() 
+	tween.tween_property($point, "position", Vector2.ZERO, recovery_time).set_trans(Tween.TRANS_CIRC)
 
 func get_current_position() -> Vector2:
 	return $point.position.normalized() if enabled else Vector2.ZERO
+
+func _on_ui_block_changed(blocked) -> void:
+	enabled = !blocked

@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://c3k813wvl1a03"]
+[gd_scene load_steps=17 format=3 uid="uid://c3k813wvl1a03"]
 
 [ext_resource type="Script" uid="uid://bm5yl1dilux0j" path="res://classes/start.gd" id="1_f5myi"]
 [ext_resource type="PackedScene" uid="uid://b4kh87dkteog3" path="res://screens/joystick.tscn" id="2_oncuk"]
@@ -8,9 +8,8 @@
 [ext_resource type="PackedScene" uid="uid://b84mqy5i11e66" path="res://screens/player.tscn" id="3_y4iue"]
 [ext_resource type="Texture2D" uid="uid://bwu6tuuvyasr2" path="res://assets/ui/jump/pressed_up.png" id="4_fa667"]
 [ext_resource type="PackedScene" uid="uid://quwqbm1iqsa" path="res://screens/witch.tscn" id="4_tnilg"]
-[ext_resource type="Script" uid="uid://cp4onutc6s0is" path="res://classes/time_manager.gd" id="6_3s0d0"]
+[ext_resource type="Script" uid="uid://d004cs7uwuprv" path="res://classes/user_interface/hub/touch_screen_button.gd" id="8_60g7n"]
 [ext_resource type="Texture2D" uid="uid://dc2pkqmptspwp" path="res://assets/GodotLogoShadow.png" id="8_lit3c"]
-[ext_resource type="Script" uid="uid://bpg2eqywbpywq" path="res://classes/announce_manager.gd" id="9_6nevn"]
 [ext_resource type="Texture2D" uid="uid://bvgb8dbran601" path="res://assets/sprites/blue_witch/ncaa_witch_idle.png" id="12_av2vi"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_tnilg"]
@@ -23,8 +22,7 @@ distance = -1081.0
 script/source = "extends InteractableObject
 
 func interact(human: Human) -> void:
-	%AnnuonceManager.annuonce(\"interacted\")
-	human.default_gravity = -980.0
+	MagiclineDirector.announce(\"i am a witch\")
 "
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_fa667"]
@@ -198,6 +196,7 @@ texture_normal = ExtResource("3_32bci")
 texture_pressed = ExtResource("4_fa667")
 shape = SubResource("CircleShape2D_tnilg")
 action = "jump"
+script = ExtResource("8_60g7n")
 
 [node name="StaticBody2D" type="StaticBody2D" parent="."]
 
@@ -222,16 +221,6 @@ position = Vector2(1033, 869)
 scale = Vector2(8, 8)
 run_velocity = 480.0
 
-[node name="TimeManager" type="Node" parent="."]
-unique_name_in_owner = true
-script = ExtResource("6_3s0d0")
-metadata/_custom_type_script = "uid://cp4onutc6s0is"
-
-[node name="AnnuonceManager" type="CanvasLayer" parent="."]
-unique_name_in_owner = true
-script = ExtResource("9_6nevn")
-metadata/_custom_type_script = "uid://bpg2eqywbpywq"
-
 [node name="InteractableObject" type="Area2D" parent="."]
 position = Vector2(-628, -35)
 script = SubResource("GDScript_32bci")
@@ -255,5 +244,3 @@ offset_bottom = 813.0
 position = Vector2(2588, 875)
 scale = Vector2(4, 4)
 texture = SubResource("AtlasTexture_hnw42")
-
-[connection signal="DayChanged" from="TimeManager" to="." method="_on_time_manager_day_changed"]

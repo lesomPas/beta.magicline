@@ -70,10 +70,9 @@ func internal_tick_physics(state: PhysicsState, delta: float) -> void:
 
 func internal_transition_state(from: int, to: int) -> void:
 	if to == PhysicsState.hurt:
+		print_debug(name)
 		health_attribute.subtract(pending_damage.amount)
 	super(from, to)
 
-func commit_information(_information: Dictionary[String, String]) -> void:
-	NameMap.name_map[_information["name"]] = self
-	NameMap.cn_name_map[_information["cn_name"]] = self
-	NameMap.id_map[_information["id"]] = self
+func commit_information(_name: String = "", _cn_name: String = "", _id: String = "") -> void:
+	MagiclineDirector.register_human_info(self, _name, _cn_name, _id)

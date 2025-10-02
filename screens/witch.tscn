@@ -1,10 +1,14 @@
-[gd_scene load_steps=17 format=3 uid="uid://quwqbm1iqsa"]
+[gd_scene load_steps=25 format=3 uid="uid://quwqbm1iqsa"]
 
 [ext_resource type="PackedScene" uid="uid://bkxtmrxheopbh" path="res://screens/interactive_npc.tscn" id="1_uwstm"]
 [ext_resource type="Shader" uid="uid://clgu1gwxyx32c" path="res://shader/hit_die.gdshader" id="2_i4ju1"]
 [ext_resource type="Texture2D" uid="uid://bvgb8dbran601" path="res://assets/sprites/blue_witch/ncaa_witch_idle.png" id="2_iprmw"]
 [ext_resource type="Script" uid="uid://bi707wg817fa4" path="res://classes/witch.gd" id="2_ygipk"]
 [ext_resource type="Texture2D" uid="uid://baeucxv2gibpd" path="res://assets/sprites/blue_witch/ncaa_witch_run.png" id="3_ibtqc"]
+[ext_resource type="Script" uid="uid://bmnuv5bs6auqp" path="res://classes/attribute/attribute.gd" id="6_oq4ek"]
+[ext_resource type="Script" uid="uid://d12lu86r7qbg" path="res://classes/attribute/attributes/health.gd" id="7_7lc3r"]
+[ext_resource type="Script" uid="uid://cr62nmy4ogdew" path="res://classes/attribute/attributes/stamina.gd" id="8_ft8jg"]
+[ext_resource type="Script" uid="uid://yeiwlf2g3ea7" path="res://classes/attribute/attribute_collection.gd" id="9_8wxxx"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_ygipk"]
 shader = ExtResource("2_i4ju1")
@@ -751,6 +755,35 @@ _data = {
 &"walk": SubResource("Animation_i40rf")
 }
 
+[sub_resource type="Resource" id="Resource_4oo1q"]
+script = ExtResource("7_7lc3r")
+attribute_name = "health"
+base_value = 100.0
+lower_limit = 0.0
+upper_limit = 100.0
+metadata/_custom_type_script = "uid://d12lu86r7qbg"
+
+[sub_resource type="Resource" id="Resource_wowuo"]
+script = ExtResource("6_oq4ek")
+attribute_name = "magic"
+base_value = 120.0
+lower_limit = 0.0
+upper_limit = 120.0
+metadata/_custom_type_script = "uid://bmnuv5bs6auqp"
+
+[sub_resource type="Resource" id="Resource_y001b"]
+script = ExtResource("8_ft8jg")
+attribute_name = "stamina"
+base_value = 100.0
+lower_limit = 0.0
+upper_limit = 100.0
+metadata/_custom_type_script = "uid://cr62nmy4ogdew"
+
+[sub_resource type="Resource" id="Resource_uerrc"]
+script = ExtResource("9_8wxxx")
+attributes = Array[ExtResource("6_oq4ek")]([SubResource("Resource_4oo1q"), SubResource("Resource_wowuo"), SubResource("Resource_y001b")])
+metadata/_custom_type_script = "uid://yeiwlf2g3ea7"
+
 [node name="entity" instance=ExtResource("1_uwstm")]
 script = ExtResource("2_ygipk")
 
@@ -796,3 +829,6 @@ libraries = {
 visible = false
 position = Vector2(-1, 8.75)
 shape = SubResource("RectangleShape2D_i4ju1")
+
+[node name="AttributeComponent" parent="." index="4"]
+attribute_collection = SubResource("Resource_uerrc")

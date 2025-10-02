@@ -17,6 +17,7 @@ var player: Human
 
 func _ready() -> void:
 	ground_states.append(NPCState.follow)
+	super()
 
 func direction_to() -> Vector2:
 	return player.global_position - self.global_position
@@ -35,12 +36,6 @@ func internal_tick_physics(state: int, delta: float) -> void:
 
 
 func internal_transition_state(from: int, to: int) -> void:
-	#print("%s seconds: [%s] --> [%s]" % [
-		#Engine.get_physics_frames() % 60,
-		#NPCState.keys()[from] if from != -1 else "start",
-		#NPCState.keys()[to]
-	#])
-
 	if to == -1 || ( to >= 2 and to != 6):
 		super(from, to)
 		return

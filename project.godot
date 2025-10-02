@@ -18,7 +18,7 @@ config/icon="res://assets/icon.svg"
 
 [autoload]
 
-NameMap="*res://classes/global/name_map.gd"
+MagiclineDirector="*res://classes/global/magicline_director.gd"
 
 [dialogic]
 
@@ -63,6 +63,20 @@ window/stretch/aspect="expand"
 [editor_plugins]
 
 enabled=PackedStringArray("res://addons/com.timothyqiu.animation-resetter/plugin.cfg")
+
+[file_customization]
+
+folder_colors={
+"res://addons/": "yellow",
+"res://assets/": "purple",
+"res://classes/": "teal",
+"res://resources/": "gray",
+"res://screens/": "pink"
+}
+
+[global_group]
+
+/main/ui/debug/info="des"
 
 [input]
 

@@ -1,6 +1,6 @@
 class_name TimeManager extends Node
 
-signal DayChanged(days: int)
+signal day_changed(days: int)
 
 var freeze: bool = false
 const ticks_per_second: int = 5
@@ -12,7 +12,7 @@ var daily_ticks: int = 0
 var days: int = 0:
 	set(value):
 		days = value
-		DayChanged.emit(value)
+		day_changed.emit(value)
 
 var _h: int = 0
 var _min: int = 0

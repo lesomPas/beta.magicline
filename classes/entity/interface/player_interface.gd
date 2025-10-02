@@ -22,6 +22,12 @@ func _unhandled_input(event: InputEvent) -> void:
 		if !interactable_obj.immediate_interact:
 			interactable_obj.interact(get_parent())
 
+	if Input.is_key_pressed(KEY_0):
+		MagiclineDirector.change_ui_block(true)
+	
+	if Input.is_key_pressed(KEY_1):
+		MagiclineDirector.change_ui_block(false)
+
 func delay_process(delta: float) -> void:
 	should_attack = false
 
