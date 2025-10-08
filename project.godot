@@ -11,8 +11,10 @@ config_version=5
 [application]
 
 config/name="MagicLine"
-config/version="0.11.03-cycle2.beta"
+config/version="0.12.01~cycle3.beta"
 run/main_scene="uid://c3k813wvl1a03"
+config/use_custom_user_dir=true
+config/custom_user_dir_name="/storage/emulated/0/Documents/"
 config/features=PackedStringArray("4.4", "Mobile")
 config/icon="res://assets/icon.svg"
 

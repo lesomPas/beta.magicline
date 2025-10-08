@@ -3,6 +3,7 @@ extends MotionInterface
 @onready var joystick := get_node("/root/start/CanvasLayer/Control2/joystick")
 
 func _unhandled_input(event: InputEvent) -> void:
+	
 	if Input.is_action_just_pressed("attack"):
 		attack()
 
@@ -18,8 +19,8 @@ func _unhandled_input(event: InputEvent) -> void:
 		#witch.interface.jump()
 
 	if Input.is_action_just_pressed("interact"):
-		var interactable_obj: InteractableObject = get_parent().interactable_objs.back()
-		if !interactable_obj.immediate_interact:
+		var interactable_obj: Interactable = get_parent().interactable_objs.back()
+		if interactable_obj && !interactable_obj.immediate_interact:
 			interactable_obj.interact(get_parent())
 
 	if Input.is_key_pressed(KEY_0):

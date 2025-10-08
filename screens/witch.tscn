@@ -3,12 +3,15 @@
 [ext_resource type="PackedScene" uid="uid://bkxtmrxheopbh" path="res://screens/interactive_npc.tscn" id="1_uwstm"]
 [ext_resource type="Shader" uid="uid://clgu1gwxyx32c" path="res://shader/hit_die.gdshader" id="2_i4ju1"]
 [ext_resource type="Texture2D" uid="uid://bvgb8dbran601" path="res://assets/sprites/blue_witch/ncaa_witch_idle.png" id="2_iprmw"]
-[ext_resource type="Script" uid="uid://bi707wg817fa4" path="res://classes/witch.gd" id="2_ygipk"]
 [ext_resource type="Texture2D" uid="uid://baeucxv2gibpd" path="res://assets/sprites/blue_witch/ncaa_witch_run.png" id="3_ibtqc"]
 [ext_resource type="Script" uid="uid://bmnuv5bs6auqp" path="res://classes/attribute/attribute.gd" id="6_oq4ek"]
 [ext_resource type="Script" uid="uid://d12lu86r7qbg" path="res://classes/attribute/attributes/health.gd" id="7_7lc3r"]
 [ext_resource type="Script" uid="uid://cr62nmy4ogdew" path="res://classes/attribute/attributes/stamina.gd" id="8_ft8jg"]
 [ext_resource type="Script" uid="uid://yeiwlf2g3ea7" path="res://classes/attribute/attribute_collection.gd" id="9_8wxxx"]
+
+[sub_resource type="GDScript" id="GDScript_i40rf"]
+script/source = "extends InteractiveNPC
+"
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_ygipk"]
 shader = ExtResource("2_i4ju1")
@@ -785,7 +788,7 @@ attributes = Array[ExtResource("6_oq4ek")]([SubResource("Resource_4oo1q"), SubRe
 metadata/_custom_type_script = "uid://yeiwlf2g3ea7"
 
 [node name="entity" instance=ExtResource("1_uwstm")]
-script = ExtResource("2_ygipk")
+script = SubResource("GDScript_i40rf")
 
 [node name="Sprite2D" parent="graphics" index="0"]
 material = SubResource("ShaderMaterial_ygipk")

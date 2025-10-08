@@ -10,7 +10,8 @@
 [ext_resource type="PackedScene" uid="uid://quwqbm1iqsa" path="res://screens/witch.tscn" id="4_tnilg"]
 [ext_resource type="Script" uid="uid://d004cs7uwuprv" path="res://classes/user_interface/hub/touch_screen_button.gd" id="8_60g7n"]
 [ext_resource type="Texture2D" uid="uid://dc2pkqmptspwp" path="res://assets/GodotLogoShadow.png" id="8_lit3c"]
-[ext_resource type="Texture2D" uid="uid://bvgb8dbran601" path="res://assets/sprites/blue_witch/ncaa_witch_idle.png" id="12_av2vi"]
+[ext_resource type="Texture2D" uid="uid://cfhglhkl0xu2h" path="res://assets/icon.svg" id="11_32bci"]
+[ext_resource type="AudioStream" uid="uid://dagucidiiwu31" path="res://assets/audios/春日影 - CRYCHIC.mp3" id="12_fa667"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_tnilg"]
 radius = 121.9
@@ -18,19 +19,15 @@ radius = 121.9
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_tnilg"]
 distance = -1081.0
 
-[sub_resource type="GDScript" id="GDScript_32bci"]
-script/source = "extends InteractableObject
+[sub_resource type="GDScript" id="GDScript_mw1wk"]
+script/source = "extends Interactable
 
-func interact(human: Human) -> void:
-	MagiclineDirector.announce(\"i am a witch\")
+func on_interact(human: Human) -> void:
+	MagiclineDirector.get_log_service().push(3, \"interactable\", \"null\", {error = 0.0})
 "
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_fa667"]
-radius = 224.199
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_hnw42"]
-atlas = ExtResource("12_av2vi")
-region = Rect2(0, 0, 40, 56)
+[sub_resource type="CircleShape2D" id="CircleShape2D_mw1wk"]
+radius = 363.27
 
 [node name="start" type="Node2D"]
 script = ExtResource("1_f5myi")
@@ -148,16 +145,17 @@ anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -623.0
+offset_left = -398.0
 offset_top = -74.0
 offset_right = -11.0
 offset_bottom = -34.0
 grow_horizontal = 0
 grow_vertical = 0
 theme = ExtResource("3_psehc")
-text = " 测试版 / ver 0.11.03-cycle2.beta "
+text = " 0.12.01~cycle3.beta"
 
 [node name="Sprite2D" type="TextureRect" parent="CanvasLayer/Control/VersionLab"]
+visible = false
 layout_mode = 0
 offset_left = -148.0
 offset_top = -29.0
@@ -190,7 +188,7 @@ grow_horizontal = 0
 grow_vertical = 0
 
 [node name="JumpButton" type="TouchScreenButton" parent="CanvasLayer/Control3"]
-position = Vector2(-366, -355)
+position = Vector2(-713, -323)
 scale = Vector2(0.8, 0.8)
 texture_normal = ExtResource("3_32bci")
 texture_pressed = ExtResource("4_fa667")
@@ -207,6 +205,9 @@ shape = SubResource("WorldBoundaryShape2D_tnilg")
 unique_name_in_owner = true
 position = Vector2(659, 873)
 scale = Vector2(8, 8)
+human_name = "misthin"
+human_cn_name = "."
+human_id = "operator.0"
 run_velocity = 720.0
 
 [node name="Camera2D" type="Camera2D" parent="player"]
@@ -217,30 +218,25 @@ drag_horizontal_enabled = true
 drag_vertical_enabled = true
 
 [node name="witch" parent="." instance=ExtResource("4_tnilg")]
-position = Vector2(1033, 869)
+position = Vector2(1035, 870)
 scale = Vector2(8, 8)
+human_name = "Director"
+human_cn_name = "中央"
+human_id = "001"
 run_velocity = 480.0
 
-[node name="InteractableObject" type="Area2D" parent="."]
-position = Vector2(-628, -35)
-script = SubResource("GDScript_32bci")
-tip = "i`m a witch!!!!!1"
-immediate_interact = true
-metadata/_custom_type_script = "uid://c6mmb1x4bcjjc"
+[node name="Interactable" type="Area2D" parent="."]
+position = Vector2(2237, 734)
+script = SubResource("GDScript_mw1wk")
+npc_enable = false
+metadata/_custom_type_script = "uid://b8armm3jlu4d8"
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="InteractableObject"]
-visible = false
-position = Vector2(2584, 918)
-shape = SubResource("CircleShape2D_fa667")
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Interactable"]
+shape = SubResource("CircleShape2D_mw1wk")
 
-[node name="Label" type="Label" parent="InteractableObject"]
-visible = false
-offset_left = 2533.0
-offset_top = 790.0
-offset_right = 2573.0
-offset_bottom = 813.0
+[node name="Sprite2D" type="Sprite2D" parent="Interactable"]
+texture = ExtResource("11_32bci")
 
-[node name="Sprite2D" type="Sprite2D" parent="InteractableObject"]
-position = Vector2(2588, 875)
-scale = Vector2(4, 4)
-texture = SubResource("AtlasTexture_hnw42")
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("12_fa667")
+autoplay = true

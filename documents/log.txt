@@ -1,6 +1,18 @@
 
-beta.magicline 0.11.03-cycle2.beta 2025.9.27 update:
-系统内容:
+
+beta.magicline 0.11.03-cycle2.beta 2025.10.3 update2:
+ 1.修复资源同步化导致的伤害同步问题
+ 2.修复Announce未已及时free Label的问题
+ 3.部分类在继承函数时没有调用super()问题
+
+ 4.block计算边长常数化
+ 5.加入游戏中央控制器MagiclineDirector, 游戏权限中央化
+ 6.加入中央UI控制器UIManager
+ 7.在NameMap中添加register()并集成到中央控制器中
+ 8.加入触控UI停止输入功能
+ 9.AnnounceManager & TimeManager集成到中央控制器中
+
+2025.9.27 update1:
   1.修复InteractiveNPC在跳跃上的处理问题
   2.加入dialogc2作为剧情管理器
 

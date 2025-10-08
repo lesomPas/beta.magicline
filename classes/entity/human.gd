@@ -26,9 +26,13 @@ var body_state: BodyStates = BodyStates.normal:
 		)
 
 var direct_body_state: BodyStates = -1
-var interactable_objs: Array[InteractableObject] = []
+var interactable_objs: Array[Interactable] = []
 
 @onready var attribute_component: AttributeComponent = $AttributeComponent
+
+@export var human_name: String = ""
+@export var human_cn_name: String = ""
+@export var human_id: String = ""
 
 func _ready() -> void:
 	health_attribute = attribute_component.find_attribute("health")
@@ -38,21 +42,25 @@ func _ready() -> void:
 	health_attribute.player = self
 	stamina_attribute.player = self
 
+	MagiclineDirector.register_human_info(self, human_name, human_cn_name, human_id)
+
 func body_process() -> void:
 	pass
 
-func register_interactable(interactalbe_obj: InteractableObject) -> void:
-	if !interactable_objs.is_empty():
-		interactable_objs.back().lab_visible = false
-	if interactalbe_obj not in interactable_objs:
-		interactalbe_obj.lab_visible = true
-		interactable_objs.append(interactalbe_obj)
+func register_interactable(interactalbe_obj: Interactable) -> void:
+	if interactalbe_obj in interactable_objs:
+		return
 
-func unregister_interactable(interactable_obj: InteractableObject) -> void:
-	interactable_objs.erase(interactable_obj)
-	interactable_obj.lab_visible = false
 	if !interactable_objs.is_empty():
-		interactable_objs.back().lab_visible = true
+		interactable_objs.back().set_label_visible(false)
+	interactalbe_obj.set_label_visible(true)
+	interactable_objs.append(interactalbe_obj)
+
+func unregister_interactable(interactable_obj: Interactable) -> void:
+	interactable_objs.erase(interactable_obj)
+	interactable_obj.set_label_visible(false)
+	if !interactable_objs.is_empty():
+		interactable_objs.back().set_label_visible(true)
 
 func skip() -> void:
 	animation_player.play("die")
@@ -70,9 +78,5 @@ func internal_tick_physics(state: PhysicsState, delta: float) -> void:
 
 func internal_transition_state(from: int, to: int) -> void:
 	if to == PhysicsState.hurt:
-		print_debug(name)
 		health_attribute.subtract(pending_damage.amount)
 	super(from, to)
-
-func commit_information(_name: String = "", _cn_name: String = "", _id: String = "") -> void:
-	MagiclineDirector.register_human_info(self, _name, _cn_name, _id)

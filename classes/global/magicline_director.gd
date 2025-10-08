@@ -1,5 +1,7 @@
 extends Node
 
+const player_id: String = "operator.0"
+
 # core value in game
 var debug_mode: bool = true:
 	set = set_debug_mode
@@ -12,17 +14,23 @@ var _ui_manager: UIManager
 var _announce_manager: AnnounceManager
 var _time_manager: TimeManager
 var _name_map: NameMap
+var _scene_manager: SceneManager
+var _log_service: LogService
 
 func _enter_tree() -> void:
 	_ui_manager = UIManager.new()
 	_announce_manager = AnnounceManager.new()
 	_time_manager = TimeManager.new()
 	_name_map = NameMap.new()
+	_scene_manager = SceneManager.new()
+	_log_service = LogService.new()
 
 	add_child(_ui_manager)
 	add_child(_announce_manager)
 	add_child(_time_manager)
 	add_child(_name_map)
+	add_child(_scene_manager)
+	add_child(_log_service)
 
 
 func _ready() -> void:
@@ -50,7 +58,7 @@ func connect_signal(manager: Node, signal_name: StringName, target: Callable, de
 
 	tree_exiting.connect(
 		func():
-			if manager && manager.get_signal(signal_name).is_connected(target):
+			if manager && manager.has_signal(signal_name) && manager.is_connected(signal_name, target):
 				manager.disconnect(signal_name, target)
 	)
 
@@ -67,6 +75,16 @@ func get_time_manager() -> TimeManager:
 func get_name_map() -> NameMap:
 	return _name_map
 
+func get_scene_manager() -> SceneManager:
+	return _scene_manager
+
+func get_player() -> Player:
+	return _name_map.get_by_id(player_id) as Player
+
+func get_log_service() -> LogService:
+	return _log_service
+
+
 func change_ui_block(blocked: bool) -> void:
 	_ui_manager.set_ui_block(blocked)
 
@@ -81,3 +99,6 @@ func get_format_day_time() -> String:
 
 func register_human_info(human: Human = null, _name: String = "", _cn_name: String = "", _id: String = "") -> void:
 	_name_map.register(human, _name, _cn_name, _id)
+
+func change_scene(path: String, entry_point: String) -> void:
+	_scene_manager.change_scene(path, entry_point)

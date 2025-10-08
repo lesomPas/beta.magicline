@@ -60,6 +60,8 @@ func _process(delta: float) -> void:
 	fps_lab.text = " FPS: %d " % Engine.get_frames_per_second()
 	version_lab.text = " 测试版 / ver %s " % ProjectSettings.get("application/config/version")
 
+func update_player(pos: Vector2, direction: float = 1.0) -> void:
+	$%player.teleport_to(pos, direction)
 
 func _on_day_changed(days: int) -> void:
 	_day_time = MagiclineDirector.get_format_day_time()

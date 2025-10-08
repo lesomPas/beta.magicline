@@ -40,6 +40,9 @@ metadata/_custom_type_script = "uid://yeiwlf2g3ea7"
 [node name="entity" instance=ExtResource("1_e81ej")]
 collision_layer = 4
 script = ExtResource("2_7206x")
+human_name = ""
+human_cn_name = ""
+human_id = ""
 
 [node name="Hitbox" parent="graphics" index="1"]
 collision_mask = 8

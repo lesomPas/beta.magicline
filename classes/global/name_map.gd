@@ -4,6 +4,10 @@ var _name_map: Dictionary[String, Human] = {}
 var _cn_name_map: Dictionary[String, Human] = {}
 var _id_map: Dictionary[String, Human] = {}
 
+@onready var log: LogService
+
+func _ready() -> void:
+	log = MagiclineDirector.get_log_service()
 
 func get_by_name(name: String) -> Human:
 	return _name_map.get(name)
@@ -27,21 +31,28 @@ func setup() -> void:
 	_id_map.clear()
 
 func register(human: Human, _name: String, _cn_name: String, _id: String) -> bool:
+	var data: Dictionary = {
+		"name" = _name,
+		"cn_name" = _cn_name,
+		"id" = _id,
+	}
 	if human == null or not is_instance_valid(human):
-		push_error("Register: Human 实例无效")
+		log.warning("NameMap Register", "invaild instance", {
+			"human" = human
+		})
 		return false
+
 	if _name.is_empty() or _cn_name.is_empty() or _id.is_empty():
-		push_error("Register: 存在空字符串键")
+		log.warning("NameMap Register", "invaild data: empty stirng", data) 
 		return false
 
 	if has_any(_name, _cn_name, _id):
-		push_error("Register: 键已存在 → %s / %s / %s" % [_name, _cn_name, _id])
+		log.warning("NameMap Register", "the key already exists", data)
 		return false
 
 	_name_map[_name] = human
 	_cn_name_map[_cn_name] = human
 	_id_map[_id] = human
 
-	if MagiclineDirector.debug_mode:
-		print("Registered: %s | %s | %s" % [_name, _cn_name, _id])
+	log.info("NameMap Register", "successfully", data)
 	return true

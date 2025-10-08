@@ -794,6 +794,9 @@ metadata/_custom_type_script = "uid://yeiwlf2g3ea7"
 [node name="entity" instance=ExtResource("1_5jwn5")]
 collision_layer = 2
 script = ExtResource("2_wt686")
+human_name = ""
+human_cn_name = ""
+human_id = ""
 
 [node name="Sprite2D" parent="graphics" index="0"]
 material = SubResource("ShaderMaterial_wt686")

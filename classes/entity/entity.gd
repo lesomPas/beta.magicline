@@ -24,8 +24,9 @@ var default_gravity: float = ProjectSettings.get("physics/2d/default_gravity") a
 var direction: float = 1.0:
 	set(value):
 		direction = value
-		$graphics.scale.x = sign(value)
-
+		if not is_node_ready():
+			await ready
+		$graphics.scale.x = sign(value) if sign(value) != 0 else 1.0
 @export var run_velocity: float = 560.0
 @export var jump_velocity: float = -960.0
 
@@ -37,6 +38,8 @@ var air_acceleration: float = 8000.0:
 
 var _is_first_tick: bool = false
 #endregion
+
+var camera_2d: Camera2D = null
 
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
 
@@ -162,6 +165,15 @@ func internal_transition_state(from: int, to: int) -> void:
 			skip()
 
 	_is_first_tick = true
+#endregion
+
+#region expand functions
+func teleport_to(pos: Vector2, _direction: float) -> void:
+	self.global_position = pos
+	direction = _direction
+	if camera_2d:
+		camera_2d.reset_smoothing()
+		camera_2d.force_update_scroll()
 #endregion
 
 func skip() -> void:
